@@ -1,0 +1,55 @@
+CREATE DATABASE IF NOT EXISTS dbGamarraMarket;
+USE dbGamarraMarket;
+
+CREATE TABLE CLIENTE (
+    id INT PRIMARY KEY,
+    tipo_documento CHAR(3),
+    numero_documento CHAR(15),
+    nombres VARCHAR(80),
+    apellidos VARCHAR(90),
+    email VARCHAR(80),
+    celular CHAR(9),
+    fecha_nacimiento DATE,
+    activo BOOLEAN
+);
+
+CREATE TABLE VENDEDOR (
+    id INT PRIMARY KEY,
+    tipo_documento CHAR(3),
+    numero_documento CHAR(15),
+    nombres VARCHAR(80),
+    apellidos VARCHAR(90),
+    salario DECIMAL(8,2),
+    celular CHAR(9),
+    email VARCHAR(80),
+    activo BOOLEAN
+);
+
+CREATE TABLE PRENDA (
+    id INT PRIMARY KEY,
+    descripcion VARCHAR(90),
+    marca VARCHAR(60),
+    cantidad INT,
+    talla VARCHAR(10),
+    precio DECIMAL(8,2),
+    activo BOOLEAN
+);
+
+CREATE TABLE VENTA (
+    id INT PRIMARY KEY,
+    fecha_hora TIMESTAMP,
+    activo BOOLEAN,
+    cliente_id INT,
+    vendedor_id INT,
+    FOREIGN KEY (cliente_id) REFERENCES CLIENTE(id),
+    FOREIGN KEY (vendedor_id) REFERENCES VENDEDOR(id)
+);
+
+CREATE TABLE VENTA_DETALLE (
+    id INT PRIMARY KEY,
+    cantidad INT,
+    venta_id INT,
+    prenda_id INT,
+    FOREIGN KEY (venta_id) REFERENCES VENTA(id),
+    FOREIGN KEY (prenda_id) REFERENCES PRENDA(id)
+);
